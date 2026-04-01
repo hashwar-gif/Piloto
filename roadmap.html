@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap - HASHWAR</title>
+  
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="./public/css/styles_header.css">
+    
+    <style>
+        :root {
+            --primary-glow: #00d4ff;
+            --secondary-glow: #0055ff;
+            --dark-bg: #000814;
+        }
+        
+        /* Redes Sociales Sidebar */
+        .social-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-glow);
+            color: #000;
+            transform: scale(1.2) translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Redes Sociales Sidebar -->
+    <div class="social-sidebar d-none d-lg-flex">
+        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Header Dinámico -->
+    <div id="header-placeholder"></div>
+    <script src="./public/js/header.js"></script>
+
+    <section class="roadmap-section py-5" id="roadmap" style="padding-top: 90px !important;">
+        <div class="container">
+            <h2 class="section-title text-center mb-5" style="color: #00d4ff; font-family: 'Orbitron', sans-serif;">ROADMAP ESTRATÉGICO</h2>
+            <div class="timeline">
+                <!-- Hito Actualizado: Abril 2026 -->
+                <div class="timeline-item current mb-5 p-4" style="background: rgba(0, 31, 58, 0.4); border-left: 4px solid #00d4ff; border-radius: 0 15px 15px 0;">
+                    <div class="timeline-date fw-bold text-info">ABRIL 2026</div>
+                    <div class="timeline-content">
+                        <h4 class="text-white">LANZAMIENTO OFICIAL</h4>
+                        <ul class="list-unstyled mt-3" style="color: #b0d4ff;">
+                           <li>✅ PLATAFORMA</li>
+                           <li>✅ ADADEMIAHASHWAR</li>
+                           <li>✅ GAMEPLAY</li>
+                           <li>✅ HASHWAR</li>
+                           <li>✅ PAQUETES GRATUITOS</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item future mb-5 p-4" style="background: rgba(0, 31, 58, 0.4); border-left: 4px solid #ff0055; border-radius: 0 15px 15px 0; opacity: 0.8;">
+                    <div class="timeline-date fw-bold text-danger">JULIO 2026</div>
+                    <div class="timeline-content">
+                        <h4 class="text-white">LANZAMIENTO BETA</h4>
+                        <ul class="list-unstyled mt-3" style="color: #b0d4ff;">
+                            <li>🔄 Core gameplay 3D RTS</li>
+                            <li>🔄 Sistema de torneos</li>
+                            <li>🔄 App móvil</li>
+                            <li>🔄 Multi-chain</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item future p-4" style="background: rgba(0, 31, 58, 0.4); border-left: 4px solid #00d4ff; border-radius: 0 15px 15px 0; opacity: 0.8;">
+                    <div class="timeline-date fw-bold text-info">ENERO 2027</div>
+                    <div class="timeline-content">
+                        <h4 class="text-white">LANZAMIENTO OFICIAL FINAL</h4>
+                        <ul class="list-unstyled mt-3" style="color: #b0d4ff;">
+                            <li>⚡ Cross-platform play</li>
+                            <li>⚡ DAO de gobierno</li>
+                            <li>⚡ Hardware de minería oficial</li>
+                            <li>⚡ Esports profesional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Dinámico -->
+    <div id="footer-placeholder"></div>
+    <script src="./public/js/footer.js"></script>
+    <link rel="stylesheet" href="./public/css/styles_footer.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

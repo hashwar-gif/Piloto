@@ -1,0 +1,165 @@
+
+/* ===== ESTILOS BASE FOOTER v3.9 (OPTIMIZADO BOOTSTRAP) ===== */
+.main-footer {
+    background: linear-gradient(180deg, #0a1929 0%, #000000 100%);
+    color: #e0f7ff;
+    border-top: 2px solid #00d4ff;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+/* Certificados */
+.certifications-section {
+    background: rgba(0, 10, 20, 0.4);
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+.cert-title {
+    color: #00d4ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+.cert-logo {
+    width: 180px;
+    height: 90px;
+    background: rgba(0, 20, 40, 0.6);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.4s ease;
+}
+.cert-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(0.5) brightness(0.8);
+    transition: 0.3s;
+}
+.cert-logo:hover {
+    background: #ffffff !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+    border-color: #00d4ff;
+}
+.cert-logo:hover img {
+    filter: grayscale(0) brightness(1);
+}
+
+/* Ubicación y Mapa */
+.location-section {
+    padding: 60px 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+.location-title {
+    color: #00d4ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+.location-info-compact {
+    background: rgba(0, 31, 58, 0.4);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Títulos de Columnas */
+.footer-col-title {
+    color: #00d4ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 10px;
+}
+.footer-col-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: #00d4ff;
+}
+
+/* Enlaces */
+.footer-links-shared li a {
+    color: #b0d4ff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+.footer-links-shared li a:hover {
+    color: #00d4ff;
+    transform: translateX(5px);
+}
+
+/* Redes Sociales */
+.social-link-shared {
+    width: 38px;
+    height: 38px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00d4ff;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.social-link-shared:hover {
+    background: #00d4ff;
+    color: #000;
+    transform: translateY(-3px) rotate(8deg);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+/* Newsletter e Iconos de Pago */
+.payment-icons-mini i {
+    font-size: 1.4rem;
+    transition: 0.3s;
+    cursor: help;
+}
+.payment-icons-mini i:hover {
+    color: #00d4ff;
+    transform: scale(1.2);
+    opacity: 1 !important;
+}
+
+/* Divider */
+.footer-divider {
+    position: relative;
+    text-align: center;
+}
+.divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+}
+.divider-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #020b16;
+    padding: 0 20px;
+    color: #00d4ff;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* Responsividad */
+@media (max-width: 991px) {
+    .cert-logo { width: 140px; height: 70px; }
+    .footer-col-title { margin-top: 20px; }
+}

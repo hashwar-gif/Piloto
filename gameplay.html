@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gameplay - HASHWAR</title>
+  
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="./public/css/styles_header.css">
+    
+    <style>
+        :root {
+            --primary-glow: #00d4ff;
+            --secondary-glow: #0055ff;
+            --dark-bg: #000814;
+        }
+
+        /* Estilos del Vídeo Gameplay */
+        .video-gameplay-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            border: 2px solid var(--primary-glow);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            background: #000;
+        }
+
+        .video-gameplay-container video {
+            width: 100%;
+            display: block;
+        }
+
+        /* Redes Sociales Sidebar */
+        .social-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-glow);
+            color: #000;
+            transform: scale(1.2) translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Redes Sociales Sidebar -->
+    <div class="social-sidebar d-none d-lg-flex">
+        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Header Dinámico -->
+    <div id="header-placeholder"></div>
+    <script src="./public/js/header.js"></script>
+
+    <section class="game-features py-5" id="gameplay" style="padding-top: 90px !important;">
+        <div class="container">
+            <h2 class="section-title text-center mb-5" style="color: #00d4ff; font-family: 'Orbitron', sans-serif;">GAMEPLAY ESTRATÉGICO AVANZADO</h2>
+            
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 60px;">
+                <a href="./public/gameplay/index.html" class="btn btn-lg btn-info py-3 px-5 fw-bold" style="box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);">
+                    <span class="btn-icon">🎮</span>
+                    ENTRAR AL JUEGO
+                </a>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card p-4 h-100" style="background: rgba(0, 31, 58, 0.5); border: 1px solid #00d4ff; border-radius: 15px;">
+                        <div class="feature-icon fs-1 mb-3">⚔️</div>
+                        <h3>Combate Táctico</h3>
+                        <ul class="list-unstyled" style="color: #b0d4ff;">
+                            <li><i class="fas fa-caret-right me-2"></i> Formaciones dinámicas</li>
+                            <li><i class="fas fa-caret-right me-2"></i> Terreno estratégico</li>
+                            <li><i class="fas fa-caret-right me-2"></i> Héroes únicos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 h-100" style="background: rgba(0, 31, 58, 0.5); border: 1px solid #ff0055; border-radius: 15px;">
+                        <div class="feature-icon fs-1 mb-3">🏗️</div>
+                        <h3>Economía Real</h3>
+                        <ul class="list-unstyled" style="color: #b0d4ff;">
+                            <li><i class="fas fa-caret-right me-2"></i> Rutas comerciales</li>
+                            <li><i class="fas fa-caret-right me-2"></i> Mercado dinámico</li>
+                            <li><i class="fas fa-caret-right me-2"></i> Minería integrada</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 h-100" style="background: rgba(0, 31, 58, 0.5); border: 1px solid #00d4ff; border-radius: 15px;">
+                        <div class="feature-icon fs-1 mb-3">🔬</div>
+                        <h3>Tecnología</h3>
+                        <ul class="list-unstyled" style="color: #b0d4ff;">
+                            <li><i class="fas fa-caret-right me-2"></i> Árbol tecnológico</li>
+                            <li><i class="fas fa-caret-right me-2"></i> Investigación de clan</li>
+                            <li><i class="fas fa-caret-right me-2"></i> Utilidad NFT</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Dinámico -->
+    <div id="footer-placeholder"></div>
+    <script src="./public/js/footer.js"></script>
+    <link rel="stylesheet" href="./public/css/styles_footer.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>        
+    </body>
+    </html>

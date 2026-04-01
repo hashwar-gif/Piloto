@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - HASHWAR</title>
+  
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="./public/css/styles_header.css">
+    
+    <style>
+        :root {
+            --primary-glow: #00d4ff;
+            --secondary-glow: #0055ff;
+            --dark-bg: #000814;
+        }
+
+        /* Redes Sociales Sidebar */
+        .social-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-glow);
+            color: #000;
+            transform: scale(1.2) translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Redes Sociales Sidebar -->
+    <div class="social-sidebar d-none d-lg-flex">
+        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Header Dinámico -->
+    <div id="header-placeholder"></div>
+    <script src="./public/js/header.js"></script>
+
+    <section class="services-enhanced py-5" style="padding-top: 90px !important;">
+        <div class="container">
+            <h2 class="section-title text-center mb-5" style="color: #00d4ff; font-family: 'Orbitron', sans-serif;">NUESTROS SERVICIOS</h2>
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="service-card p-4" style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; border: 1px solid #00d4ff;">
+                        <div class="fs-1 mb-3">⚙️</div>
+                        <h3>CONSULTORÍA</h3>
+                        <p>Optimización de Rigs y ASICs, análisis de rentabilidad y soporte técnico.</p>
+                        <a href="contacto.html" class="btn btn-outline-info">CONSULTAR</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card p-4 border border-info border-3" style="background: rgba(0, 212, 255, 0.1); border-radius: 20px; transform: scale(1.05);">
+                        <div class="fs-1 mb-3">🎓</div>
+                        <h3>ACADEMIA NOVATO</h3>
+                        <p>Fundamentos Blockchain, Minería de Bitcoin y manejo de billeteras.</p>
+                        <a href="./public/academia/index.html" class="btn btn-info">EMPEZAR</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card p-4" style="background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); opacity: 0.6;">
+                        <div class="fs-1 mb-3">⚡</div>
+                        <h3>AVANZADO</h3>
+                        <p>Inversión profesional y Smart Contracts (Próximamente).</p>
+                        <button class="btn btn-secondary" disabled>BLOQUEADO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Dinámico -->
+    <div id="footer-placeholder"></div>
+    <script src="./public/js/footer.js"></script>
+    <link rel="stylesheet" href="./public/css/styles_footer.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>        
+    </body>
+    </html>

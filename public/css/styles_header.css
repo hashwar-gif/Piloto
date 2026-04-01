@@ -1,0 +1,160 @@
+
+:root {
+    --primary-glow: #00d4ff;
+    --secondary-glow: #0055ff;
+    --dark-bg: #000814;
+}
+
+.navbar {
+    background: rgba(0, 8, 20, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: none;
+    padding: 0.8rem 0;
+}
+
+.navbar-brand .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar-brand .logo span {
+    background: linear-gradient(135deg, #f7e11a 0%, #f7931a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(247, 225, 26, 0.5);
+    filter: drop-shadow(0 0 5px rgba(247, 225, 26, 0.3));
+}
+
+.nav-link {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    transition: all 0.3s ease;
+    margin: 0 3px;
+    color: #ffffff !important;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-glow) !important;
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.btn-logout {
+    background: #f7e11a;
+    border: none;
+    font-family: 'Orbitron', sans-serif;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: 800;
+    color: #000 !important;
+    box-shadow: 0 0 15px rgba(247, 225, 26, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-logout:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(247, 225, 26, 0.5);
+    color: #000 !important;
+}
+
+.btn-btc {
+    background: linear-gradient(135deg, #f7e11a 0%, #f7931a 100%) !important;
+    color: #000 !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    padding: 10px 22px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: 0 0 20px rgba(247, 147, 26, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3) !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.5px;
+}
+
+.btn-btc:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 0 35px rgba(247, 147, 26, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.4) !important;
+    filter: brightness(1.1);
+}
+
+.btn-btc i {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+}
+
+/* Modal de Login */
+.hash-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 5, 15, 0.9);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.hash-modal-content {
+    background: #001f3a;
+    border: 2px solid var(--primary-glow);
+    border-radius: 25px;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
+    position: relative;
+}
+.modal-title {
+    color: var(--primary-glow);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin: 0;
+}
+.close-modal {
+    background: none; border: none; color: #fff;
+    font-size: 2.5rem; cursor: pointer; line-height: 1;
+}
+.form-label-modal {
+    display: block; margin-bottom: 8px; color: var(--primary-glow);
+    font-size: 0.8rem; text-transform: uppercase;
+}
+.form-input-modal {
+    width: 100%; padding: 15px; background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(0, 212, 255, 0.2); color: #fff;
+    border-radius: 12px; font-family: inherit;
+}
+.form-submit-modal {
+    width: 100%; padding: 18px; background: var(--primary-glow);
+    color: #000; border: none; border-radius: 12px;
+    font-weight: 900; text-transform: uppercase;
+    cursor: pointer; transition: 0.3s;
+}
+
+/* Onda del Header */
+.svg-wave-header {
+    width: 100%; overflow: hidden; line-height: 0;
+    margin-top: -1px; position: absolute; left: 0;
+    z-index: 10; pointer-events: none;
+}
+.svg-wave-header svg { display: block; width: calc(100% + 1.3px); height: 60px; }
+.svg-wave-header .wave-bg { fill: rgba(0, 8, 20, 0.95); }
+.svg-wave-header .wave-line {
+    fill: none; stroke: var(--primary-glow); stroke-width: 3;
+    filter: drop-shadow(0px 2px 5px rgba(0, 212, 255, 0.6));
+}

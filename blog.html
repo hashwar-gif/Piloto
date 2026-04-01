@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - HASHWAR</title>
+  
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="./public/css/blog_v32.css">
+    <link rel="stylesheet" href="./public/css/styles_header.css">
+    
+    <style>
+        :root {
+            --primary-glow: #00d4ff;
+            --secondary-glow: #0055ff;
+            --dark-bg: #000814;
+        }
+
+        /* Redes Sociales Sidebar */
+        .social-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-glow);
+            color: #000;
+            transform: scale(1.2) translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Redes Sociales Sidebar -->
+    <div class="social-sidebar d-none d-lg-flex">
+        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Header Dinámico -->
+    <div id="header-placeholder"></div>
+    <script src="./public/js/header.js"></script>
+
+    <section class="blog-enhanced py-5" id="blog" style="padding-top: 90px !important;">
+        <div class="container">
+            <div class="blog-header text-center mb-5">
+                <h2 class="section-title" style="color: #00d4ff; font-family: 'Orbitron', sans-serif;">BLOG HASHWAR</h2>
+                <p class="text-light opacity-75">Mantente actualizado con las últimas noticias del universo HASHWAR</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Tarjeta de Blog 1 -->
+                <div class="col-md-6">
+                    <div class="blog-card-enhanced p-4" style="background: rgba(0, 31, 58, 0.4); border-radius: 15px; border: 1px solid #00d4ff;">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded mb-3" alt="Noticias">
+                        <span class="badge bg-info text-dark mb-2">NOTICIAS</span>
+                        <h3 class="text-white">Gran Final del Torneo HASHWAR</h3>
+                        <p style="color: #b0d4ff;">Sigue en vivo la batalla final por el pool de $100,000 USDT. Los mejores clanes se enfrentan hoy.</p>
+                        <a href="#" class="btn btn-sm btn-outline-info">Leer más</a>
+                    </div>
+                </div>
+                <!-- Tarjeta de Blog 2 -->
+                <div class="col-md-6">
+                    <div class="blog-card-enhanced p-4" style="background: rgba(0, 31, 58, 0.4); border-radius: 15px; border: 1px solid #ff0055;">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded mb-3" alt="Estrategias">
+                        <span class="badge bg-danger mb-2">ESTRATEGIAS</span>
+                        <h3 class="text-white">Dominando el Terreno 3D</h3>
+                        <p style="color: #b0d4ff;">Aprende a posicionar tus defensas según la elevación del terreno en la nueva versión 5.0.</p>
+                        <a href="#" class="btn btn-sm btn-outline-danger">Leer más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Dinámico -->
+    <div id="footer-placeholder"></div>
+    <script src="./public/js/footer.js"></script>
+    <link rel="stylesheet" href="./public/css/styles_footer.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>        
+    </body>
+    </html>

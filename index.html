@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASHWAR: Rise of the Miners</title>
+  
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="./public/css/styles_header.css">
+    
+    <style>
+        /* Estilos de Fondo y Partículas de Index */
+        .background-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+        }
+        .background-image {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: brightness(0.2);
+        }
+        .background-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,20,40,0.4) 0%, rgba(10,15,26,0.9) 100%);
+        }
+
+        .particles-container, .crypto-floating {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle, .crypto-coin {
+            position: absolute;
+            bottom: -50px;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .hero {
+            background: transparent !important;
+        }
+
+        /* Redes Sociales Sidebar */
+        .social-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-glow);
+            color: #000;
+            transform: scale(1.2) translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img src="./public/img/logo_principal.jpeg" alt="Fondo" class="background-image">
+        <div class="background-overlay"></div>
+    </div>
+    
+    <div class="particles-container" id="particles-container"></div>
+    <div class="crypto-floating" id="crypto-floating"></div>
+
+    <!-- Redes Sociales Sidebar -->
+    <div class="social-sidebar d-none d-lg-flex">
+        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Header Dinámico -->
+    <div id="header-placeholder"></div>
+    <script src="./public/js/header.js"></script>
+
+<section class="hero" id="home" style="padding-top: 60px !important; padding-bottom: 40px !important;">
+    <div class="container">
+        <!-- Carrusel -->
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                    <a href="./gameplay.html">
+                        <img src="./public/img/logo_principal.jpeg" alt="Gameplay HASHWAR">
+                        <div class="slide-content">
+                            <p>Startup ganadora de LaPazTec del Bicentenario - GAMLP</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                    <a href="./paquetes.html">
+                        <img src="./public/img/batallasok.jpeg" alt="Granja de Minería">
+                        <div class="slide-content">
+                            <h3>Economía Blockchain Integrada</h3>
+                            <p>Minería real que potencia tu ejército en el juego</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                    <img src="./public/img/carrucel.jpeg" alt="NFTs Exclusivos">
+                    <div class="slide-content">
+                        <h3>NFTs con Utilidad Real</h3>
+                        <p>Colecciona activos que mejoran tu experiencia de juego</p>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="carousel-slide">
+                    <img src="./public/img/entornook.jpeg" alt="Torneos Profesionales">
+                    <div class="slide-content">
+                        <h3>Torneos Profesionales</h3>
+                        <p>Compite por premios en criptomonedas reales</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="carousel-indicators" id="indicators"></div>
+        </div>
+        
+        <h1 class="title-gradient main-title">HASHWAR: Rise of the Miners</h1>
+        <p class="subtitle typing-text">El primer RTS estratégico que combina juego competitivo con minería real de criptomonedas.</p>
+        
+        <div class="hero-btns">
+            <a href="./public/academia/index.html" class="btn btn-accent">☢️ Academia HASHWAR</a>
+            <a href="./public/gameplay/index.html" class="btn btn-secondary">🎮 GamePlay V.A.0.1.0</a>
+            <a href="#" class="btn btn-primary">💲 Hash Criptonativa</a>
+        </div>
+    </div>
+</section>
+
+<!-- Roadmap Section -->
+<section class="roadmap-section py-5" id="roadmap">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" style="font-family: 'Orbitron', sans-serif; color: var(--primary-glow);">ROADMAP ESTRATÉGICO</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item current">
+                <div class="timeline-date">ABR 2026</div>
+                <div class="timeline-content">
+                    <h4>LANZAMIENTO OFICIAL</h4>
+                    <ul>
+                       <li>✅ PLATAFORMA</li>
+                       <li>✅ ADADEMIAHASHWAR</li>
+                       <li>✅ GAMEPLAY</li>
+                       <li>✅ HASHWAR</li>
+                       <li>✅ PAQUETES GRATUITOS</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item current">
+                <div class="timeline-date">JUL 2026</div>
+                <div class="timeline-content">
+                    <h4>LANZAMIENTO BETA</h4>
+                    <ul>
+                        <li>🔄 Core gameplay 3D RTS</li>
+                        <li>🔄 Sistema de torneos</li>
+                        <li>🔄 App móvil</li>
+                        <li>🔄 Multi-chain</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item future">
+                <div class="timeline-date">ENE 2027</div>
+                <div class="timeline-content">
+                    <h4>LANZAMIENTO OFICIAL</h4>
+                    <ul>
+                        <li>⚡ Cross-platform play</li>
+                        <li>⚡ Reality Show competitivo</li>
+                        <li>⚡ DAO de gobierno</li>
+                        <li>⚡ Esports profesional</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Paquetes -->
+<section class="packages py-5" id="packages">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" style="font-family: 'Orbitron', sans-serif; color: var(--primary-glow);">NUESTROS PAQUETES</h2>
+        <div class="row g-4">
+            <!-- Nivel 1 - Gratis -->
+            <div class="col-md-4">
+                <div class="package-card p-4 h-100 text-center" style="background: rgba(0, 31, 58, 0.5); border: 1px solid var(--primary-glow); border-radius: 15px;">
+                    <h3 class="package-name">Academia</h3>
+                    <div class="package-price my-3 fs-2 fw-bold" style="color: var(--primary-glow);">GRATIS</div>
+                    <ul class="list-unstyled mb-4 text-start">
+                        <li><i class="fas fa-check text-success me-2"></i> Acceso al juego base</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Tutoriales de minería</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Soporte básico</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Contenido educativo</li>
+                    </ul>
+                    <a href="./public/academia/index.html" class="btn btn-outline-info w-100">COMENZAR GRATIS</a>
+                </div>
+            </div>
+            
+            <!-- Nivel 2 - Pro -->
+            <div class="col-md-4">
+                <div class="package-card p-4 h-100 text-center featured coming-soon" style="background: rgba(0, 50, 100, 0.6); border: 2px solid #ff0055; border-radius: 15px;">
+                    <div class="package-coming-soon-overlay">Próximamente</div>
+                    <h3 class="package-name">Pro (Nivel 3-4)</h3>
+                    <div class="package-price my-3 fs-2 fw-bold" style="color: #ff0055;">$7.99</div>
+                    <ul class="list-unstyled mb-4 text-start">
+                        <li><i class="fas fa-check text-success me-2"></i> Acceso a Pool de Minería</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Hasta 2 GPUs conectadas</li>
+                        <li><i class="fas fa-check text-success me-2"></i> NFTs exclusivos</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Torneos con premios</li>
+                    </ul>
+                    <button class="btn btn-secondary w-100" disabled>BLOQUEADO</button>
+                </div>
+            </div>
+
+            <!-- Nivel 3 - Elite -->
+            <div class="col-md-4">
+                <div class="package-card p-4 h-100 text-center coming-soon" style="background: rgba(0, 31, 58, 0.5); border: 1px solid var(--primary-glow); border-radius: 15px;">
+                    <div class="package-coming-soon-overlay">Próximamente</div>
+                    <h3 class="package-name">Elite (Nivel 5)</h3>
+                    <div class="package-price my-3 fs-2 fw-bold" style="color: var(--primary-glow);">$17.99</div>
+                    <ul class="list-unstyled mb-4 text-start">
+                        <li><i class="fas fa-check text-success me-2"></i> Todo lo del nivel Pro</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Hasta 8 GPUs conectadas</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Asesor de minería personal</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Acceso VIP a eventos</li>
+                    </ul>
+                    <button class="btn btn-secondary w-100" disabled>BLOQUEADO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Marketplace Section -->
+<link rel="stylesheet" href="./public/css/marketplace_v32.css">
+<section class="marketplace py-5" id="marketplace">
+    <div class="container">
+        <h2 class="section-title text-center mb-2" style="font-family: 'Orbitron', sans-serif;">MARKETPLACE EXCLUSIVO</h2>
+        <p class="text-center text-info mb-5" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">ESTRENO PRÓXIMAMENTE</p>
+
+        <div class="marketplace-tabs mb-5">
+            <button class="tab-btn active" data-tab="merchandise">Merchandise</button>
+            <button class="tab-btn" data-tab="nfts">NFTs</button>
+            <button class="tab-btn" data-tab="mining-equipment">Equipo de Minería</button>
+        </div>
+
+        <!-- Merchandise Tab -->
+        <div class="tab-content active" id="merchandise-tab">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/poster.jpeg" alt="Poster HASHWAR">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Poster HASHWAR</h3>
+                            <div class="product-price">$14.99</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/polera.jpeg" alt="Polera HASHWAR">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Polera HASHWAR</h3>
+                            <div class="product-price">$29.99</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/caguro.jpeg" alt="Canguro HASHWAR">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Canguro HASHWAR</h3>
+                            <div class="product-price">$39.99</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/combo1.jpeg" alt="Combo HASHWAR">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Combo HASHWAR</h3>
+                            <div class="product-price">$79.99</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NFTs Tab -->
+        <div class="tab-content" id="nfts-tab">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/minero lej.jpeg" alt="NFT Legendario">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Minero Legendario</h3>
+                            <div class="product-price">0.05 ETH</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/3.jpeg" alt="NFT Épico">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">GPU Épica</h3>
+                            <div class="product-price">0.03 ETH</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/6.jpeg" alt="NFT Raro">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Hash Boost Raro</h3>
+                            <div class="product-price">0.01 ETH</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/2.jpeg" alt="NFT Pro">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Hash Boost Pro</h3>
+                            <div class="product-price">0.02 ETH</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mining Equipment Tab -->
+        <div class="tab-content" id="mining-equipment-tab">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/rog.jpg" alt="GPU RTX 3060">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">GPU RTX 3060 Ti</h3>
+                            <div class="product-price">$549.99</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/rig.jpg" alt="Mining Rig">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Rig Profesional 6x</h3>
+                            <div class="product-price">$3,200.00</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/asic.jpg" alt="ASIC S19">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Antminer S19 Pro</h3>
+                            <div class="product-price">$2,450.00</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card coming-soon">
+                        <div class="coming-soon-overlay">Próximamente</div>
+                        <div class="product-img">
+                            <img src="./public/img/hydro.jpg" alt="Hydro Cooling">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Sistema Hydro Cooling</h3>
+                            <div class="product-price">$899.99</div>
+                            <button class="btn btn-secondary" disabled>Bloqueado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AWS Section -->
+<section class="aws-award-section py-5 bg-dark" id="about">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="./public/img/18.jpeg" class="img-fluid rounded shadow-lg border border-info" alt="Premio AWS">
+            </div>
+            <div class="col-md-6 ps-md-5">
+                <div class="aws-badge mb-3"><i class="fas fa-trophy text-warning"></i> PREMIO OFICIAL</div>
+                <h3 class="mb-4">Ganador de LaPazTec del Bicentenario</h3>
+                <div class="aws-amount display-4 fw-bold text-info mb-3">$5,000</div>
+                <p>Créditos en Amazon Web Services otorgados por el Gobierno Autónomo Municipal de La Paz para potenciar nuestra infraestructura en la nube.</p>
+                <div class="d-flex gap-3 mt-4">
+                    <button class="btn btn-info">Ver Cheque</button>
+                    <a href="https://aws.amazon.com" target="_blank" class="btn btn-outline-light">Visitar AWS</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer Dinámico -->
+    <div id="footer-placeholder"></div>
+    <script src="./public/js/footer.js"></script>
+    <link rel="stylesheet" href="./public/css/styles_footer.css">
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 5 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.background = ['#F7931A', '#00d4ff', '#ff0066'][Math.floor(Math.random()*3)];
+                
+                // Animación
+                p.style.animation = `float-up ${Math.random() * 10 + 10}s infinite linear`;
+                p.style.animationDelay = Math.random() * 20 + 's';
+                
+                container.appendChild(p);
+            }
+        }
+        
+        function createCoins() {
+            const container = document.getElementById('crypto-floating');
+            const symbols = ['₿', 'Ξ', '$', '◈', '✦', '¥'];
+            const coinCount = 20;
+            
+            for (let i = 0; i < coinCount; i++) {
+                const c = document.createElement('div');
+                c.className = 'crypto-coin';
+                c.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                c.style.color = i % 2 === 0 ? '#F7931A' : '#00d4ff';
+                
+                // Animación
+                c.style.animation = `float-up ${Math.random() * 15 + 15}s infinite linear`;
+                c.style.animationDelay = Math.random() * 30 + 's';
+                
+                container.appendChild(c);
+            }
+        }
+
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    createCoins();
+
+    // --- Lógica del Modal de Login ---
+    const modal = document.getElementById('login-modal');
+    const openBtn = document.getElementById('open-login-modal');
+    const closeBtn = document.getElementById('close-login');
+    const loginForm = document.getElementById('login-form-modal');
+
+    if (openBtn && modal) {
+        openBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'flex';
+            setTimeout(() => modal.style.opacity = '1', 10);
+        });
+    }
+
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.opacity = '0';
+            setTimeout(() => modal.style.display = 'none', 300);
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.opacity = '0';
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+    });
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = loginForm.querySelector('.form-submit-modal');
+            btn.textContent = 'AUTENTICANDO...';
+            btn.style.background = '#ff0066';
+            
+            setTimeout(() => {
+                // Aquí iría la redirección post-login
+                modal.style.opacity = '0';
+                setTimeout(() => modal.style.display = 'none', 300);
+                alert('¡Bienvenido minero! Operaciones iniciadas.');
+            }, 1200);
+        });
+    }
+
+    // Abrir modal automáticamente si se solicita vía URL (para compatibilidad)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('showLogin') === 'true' && openBtn) {
+        openBtn.click();
+    }
+
+    // --- Efecto de Escritura (Typing) ---
+    const typingText = document.querySelector('.typing-text');
+    if (typingText) {
+        const text = typingText.textContent;
+        typingText.textContent = '';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                typingText.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, 30);
+            }
+        }
+        setTimeout(type, 1000);
+    }
+});
+</script>
+
+<script src="./public/js/home.js"></script>
+<script src="./public/js/marketplace.js"></script>
+</body>
+</html>
+
