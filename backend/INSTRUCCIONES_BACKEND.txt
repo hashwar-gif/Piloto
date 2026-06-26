@@ -1,0 +1,123 @@
+=========================================================
+  HASHWAR: RISE OF THE MINERS - CONFIGURACIÓN DEL BACKEND
+=========================================================
+
+Este archivo explica cómo conectar la base de datos y
+ejecutar el servidor local después de clonar el repositorio.
+
+
+══════════════════════════════════════════════════════════
+  1. INSTALAR PostgreSQL
+══════════════════════════════════════════════════════════
+
+  • Descargar desde: https://www.postgresql.org/download/
+  • Durante la instalación, establece una contraseña para
+    el usuario "postgres" (ej: "mi_contraseña").
+  • Anota esa contraseña, la necesitarás más adelante.
+
+
+══════════════════════════════════════════════════════════
+  2. CREAR LA BASE DE DATOS
+══════════════════════════════════════════════════════════
+
+  Abre una terminal (PowerShell / CMD) y ejecuta:
+
+    cd backend
+    "$env:PGPASSWORD='mi_contraseña'; psql -U postgres -c 'CREATE DATABASE hashwar_db'"
+
+  (En CMD reemplazar por: set PGPASSWORD=mi_contraseña
+                            psql -U postgres -c "CREATE DATABASE hashwar_db")
+
+
+══════════════════════════════════════════════════════════
+  3. CONFIGURAR LA CONEXIÓN
+══════════════════════════════════════════════════════════
+
+  Abre el archivo "backend/.env" y edítalo con tus datos:
+
+    DATABASE_URL="postgresql://postgres:mi_contraseña@localhost:5432/hashwar_db"
+    JWT_SECRET="hashwar_secret_2026"
+    PORT=3001
+
+  Reemplaza "mi_contraseña" por la contraseña que pusiste
+  al instalar PostgreSQL.
+  (NOTA: .env NO se sube a GitHub, es local de cada quien)
+
+
+══════════════════════════════════════════════════════════
+  4. INSTALAR DEPENDENCIAS
+══════════════════════════════════════════════════════════
+
+  En la terminal, dentro de la carpeta "backend":
+
+    npm install
+
+
+══════════════════════════════════════════════════════════
+  5. EJECUTAR LAS MIGRACIONES (crear tablas)
+══════════════════════════════════════════════════════════
+
+    npx prisma migrate dev
+
+
+══════════════════════════════════════════════════════════
+  6. INSERTAR DATOS INICIALES (módulos de la academia)
+══════════════════════════════════════════════════════════
+
+    node prisma/seed.js
+
+
+══════════════════════════════════════════════════════════
+  7. INICIAR EL SERVIDOR
+══════════════════════════════════════════════════════════
+
+    npm start
+
+  Deberías ver: "HASHWAR API corriendo en http://localhost:3001"
+
+
+══════════════════════════════════════════════════════════
+  8. VERIFICAR QUE FUNCIONA
+══════════════════════════════════════════════════════════
+
+  Abre otra terminal y ejecuta:
+
+    curl http://localhost:3001/api/health
+
+  Respuesta esperada: {"status":"ok","timestamp":"..."}
+
+  O simplemente abre en el navegador:
+  → http://localhost:3001/api/health
+
+
+══════════════════════════════════════════════════════════
+  9. ABRIR EL JUEGO
+══════════════════════════════════════════════════════════
+
+  • Abre "index.html" en tu navegador (doble clic).
+  • Haz clic en "INICIAR SESIÓN" → "CREAR CUENTA".
+  • Regístrate y empieza a jugar.
+  • Visita la Academia y responde preguntas — tu progreso
+    ahora se guarda en la base de datos.
+
+
+══════════════════════════════════════════════════════════
+  NOTAS IMPORTANTES
+══════════════════════════════════════════════════════════
+
+  • El servidor debe estar CORRIENDO (paso 7) cada vez que
+    juegues, si quieres que los datos se guarden en la BD.
+
+  • Si cierras la terminal, el servidor se detiene.
+    Vuelve al paso 7 para reiniciarlo.
+
+  • La carpeta "backend/" incluye un .gitignore que ya
+    excluye node_modules/, .env, y prisma/migrations/.
+    Tus datos locales nunca se subirán a GitHub.
+
+  • Cualquier persona que clone el repositorio debe seguir
+    estos pasos para tener su propia base de datos local.
+
+=========================================================
+  © 2024-2026 HASHWAR: Rise of the Miners
+=========================================================
