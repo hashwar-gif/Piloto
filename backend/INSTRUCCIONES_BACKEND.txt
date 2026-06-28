@@ -59,12 +59,24 @@ ejecutar el servidor local después de clonar el repositorio.
 
     npx prisma migrate dev
 
+  Esto crea las 13 tablas en la base de datos:
+  User, Module, UserProgress, Transaction, GameState,
+  Post, Category, Package, UserSubscription, Product,
+  UserInventory, ContactMessage, RoadmapMilestone.
+
 
 ══════════════════════════════════════════════════════════
-  6. INSERTAR DATOS INICIALES (módulos de la academia)
+  6. INSERTAR DATOS INICIALES (seed)
 ══════════════════════════════════════════════════════════
 
     node prisma/seed.js
+
+  Esto inserta:
+  • 6 módulos de academia (blockchain, mining, etc.)
+  • 3 categorías de blog + 2 posts de ejemplo
+  • 3 paquetes de suscripción (Novato, Avanzado, Experto)
+  • 12 productos del marketplace (merch, NFTs, equipos)
+  • 3 hitos del roadmap
 
 
 ══════════════════════════════════════════════════════════
@@ -102,6 +114,51 @@ ejecutar el servidor local después de clonar el repositorio.
 
 
 ══════════════════════════════════════════════════════════
+  10. ENDPOINTS DE LA API
+══════════════════════════════════════════════════════════
+
+  Autenticación:
+    POST   /api/auth/register     → Crear cuenta
+    POST   /api/auth/login        → Iniciar sesión
+    GET    /api/auth/me           → Perfil + progreso
+    PATCH  /api/auth/hash         → Sincronizar $HASH
+
+  Academia:
+    GET    /api/modules           → Listar módulos
+    POST   /api/modules/:key/answer    → Responder pregunta
+    POST   /api/modules/:key/complete  → Completar módulo
+
+  Ranking:
+    GET    /api/ranking           → Top 100 jugadores
+
+  Gameplay:
+    GET    /api/game/state        → Cargar partida
+    POST   /api/game/state        → Guardar partida
+    DELETE /api/game/state        → Eliminar partida
+
+  Blog:
+    GET    /api/blog/posts        → Listar posts
+    GET    /api/blog/posts/:slug  → Ver post
+    GET    /api/blog/categories   → Listar categorías
+
+  Paquetes:
+    GET    /api/packages          → Listar paquetes
+    GET    /api/packages/my-subscription → Mi suscripción
+    POST   /api/packages/subscribe/:id   → Suscribirse
+
+  Marketplace:
+    GET    /api/marketplace/products     → Productos
+    POST   /api/marketplace/buy/:id      → Comprar
+    GET    /api/marketplace/inventory    → Mi inventario
+
+  Contacto:
+    POST   /api/contact           → Enviar mensaje
+
+  Roadmap:
+    GET    /api/roadmap           → Hitos del roadmap
+
+
+══════════════════════════════════════════════════════════
   NOTAS IMPORTANTES
 ══════════════════════════════════════════════════════════
 
@@ -117,6 +174,31 @@ ejecutar el servidor local después de clonar el repositorio.
 
   • Cualquier persona que clone el repositorio debe seguir
     estos pasos para tener su propia base de datos local.
+
+  • Para ver la BD desde pgAdmin4:
+    Servidor: localhost, Puerto: 5432, Usuario: postgres
+    Base de datos: hashwar_db
+
+
+══════════════════════════════════════════════════════════
+  SOLUCIÓN DE PROBLEMAS
+══════════════════════════════════════════════════════════
+
+  "Puerto 3001 ya está en uso":
+    taskkill /F /IM node.exe
+    npm start
+
+  "Error de autenticación en BD":
+    Revisar la contraseña en backend/.env
+
+  "Prisma migration falla":
+    Asegúrate de que PostgreSQL esté corriendo
+    y que la base de datos "hashwar_db" exista
+
+  "Login no funciona":
+    Abrir la página desde index.html (no desde public/gameplay/)
+    o asegurarse de haber iniciado sesión antes
+
 
 =========================================================
   © 2024-2026 HASHWAR: Rise of the Miners

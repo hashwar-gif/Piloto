@@ -64,7 +64,8 @@ document.addEventListener("DOMContentLoaded", function() {
             ${loggedIn ? `
             <div id="logged-in-state" style="text-align:center;">
                 <p style="margin:20px 0; font-size:1.1rem;">Conectado como <strong style="color:var(--primary);">${userData?.username || 'MINERO'}</strong></p>
-                <p style="margin-bottom:20px; color:#88ccff; font-size:0.9rem;">${(userData?.hashBalance || 0).toLocaleString()} $HASH</p>
+                <p style="margin-bottom:5px; color:#88ccff; font-size:0.9rem;"><span id="profile-hash-balance">${(userData?.hashBalance || 0).toLocaleString()}</span> $HASH</p>
+                <p style="margin-bottom:20px; color:#666; font-size:0.7rem;" id="profile-email">${userData?.email || ''}</p>
                 <button class="form-submit-modal" id="logout-btn" style="background:linear-gradient(135deg,#ff4444,#cc3333);">CERRAR SESIÓN</button>
             </div>
             ` : `
@@ -121,9 +122,29 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(() => modal.style.display = 'none', 300);
     }
 
+    async function refreshProfileBalance() {
+        const token = localStorage.getItem('hashwar_token');
+        if (!token) return;
+        try {
+            const resp = await fetch('http://localhost:3001/api/auth/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            const balanceEl = document.getElementById('profile-hash-balance');
+            if (balanceEl) balanceEl.textContent = data.user.hashBalance.toLocaleString();
+            localStorage.setItem('hashwar_user', JSON.stringify(data.user));
+        } catch (e) {
+            console.error('Error al refrescar perfil:', e);
+        }
+    }
+
     if (openBtn && modal) {
         openBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            if (localStorage.getItem('hashwar_token')) {
+                refreshProfileBalance();
+            }
             showModal();
         });
     }

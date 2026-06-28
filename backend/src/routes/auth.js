@@ -89,4 +89,23 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+router.patch('/hash', authMiddleware, async (req, res) => {
+  try {
+    const { hashBalance } = req.body;
+    if (typeof hashBalance !== 'number' || hashBalance < 0) {
+      return res.status(400).json({ error: 'hashBalance debe ser un número positivo' });
+    }
+
+    const user = await prisma.user.update({
+      where: { id: req.userId },
+      data: { hashBalance: Math.floor(hashBalance) },
+    });
+
+    res.json({ hashBalance: user.hashBalance });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
 module.exports = router;

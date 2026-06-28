@@ -71,4 +71,80 @@ const HashwarAPI = {
   async getRanking() {
     return this.fetch('/ranking');
   },
+
+  async getGameState() {
+    return this.fetch('/game/state');
+  },
+
+  async saveGameState(state) {
+    return this.fetch('/game/state', {
+      method: 'POST',
+      body: JSON.stringify({ state }),
+    });
+  },
+
+  async deleteGameState() {
+    return this.fetch('/game/state', { method: 'DELETE' });
+  },
+
+  async syncHash(hashBalance) {
+    return this.fetch('/auth/hash', {
+      method: 'PATCH',
+      body: JSON.stringify({ hashBalance }),
+    });
+  },
+
+  // Blog
+  async getPosts(category) {
+    const query = category ? `?category=${category}` : '';
+    return this.fetch(`/blog/posts${query}`);
+  },
+
+  async getPost(slug) {
+    return this.fetch(`/blog/posts/${slug}`);
+  },
+
+  async getCategories() {
+    return this.fetch('/blog/categories');
+  },
+
+  // Paquetes
+  async getPackages() {
+    return this.fetch('/packages');
+  },
+
+  async getMySubscription() {
+    return this.fetch('/packages/my-subscription');
+  },
+
+  async subscribe(packageId) {
+    return this.fetch(`/packages/subscribe/${packageId}`, { method: 'POST' });
+  },
+
+  // Marketplace
+  async getProducts(category) {
+    const query = category ? `?category=${category}` : '';
+    return this.fetch(`/marketplace/products${query}`);
+  },
+
+  async buyProduct(productId) {
+    return this.fetch(`/marketplace/buy/${productId}`, { method: 'POST' });
+  },
+
+  async getInventory() {
+    return this.fetch('/marketplace/inventory');
+  },
+
+  // Contacto
+  async sendContactMessage(name, email, subject, message) {
+    return this.fetch('/contact', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, subject, message }),
+    });
+  },
+
+  // Roadmap
+  async getRoadmap() {
+    return this.fetch('/roadmap');
+  },
 };
