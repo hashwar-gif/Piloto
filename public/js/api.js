@@ -29,10 +29,10 @@ const HashwarAPI = {
     return data;
   },
 
-  async register(username, email, password) {
+  async register(username, email, password, confirmPassword, knowledgeLevel, name, lastName) {
     const data = await this.fetch('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ username, name, lastName, email, password, confirmPassword, knowledgeLevel }),
     });
     this.setToken(data.token);
     localStorage.setItem('hashwar_user', JSON.stringify(data.user));

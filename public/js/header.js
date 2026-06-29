@@ -64,8 +64,10 @@ document.addEventListener("DOMContentLoaded", function() {
             ${loggedIn ? `
             <div id="logged-in-state" style="text-align:center;">
                 <p style="margin:20px 0; font-size:1.1rem;">Conectado como <strong style="color:var(--primary);">${userData?.username || 'MINERO'}</strong></p>
+                <p style="margin-bottom:2px; color:#aaa; font-size:0.85rem;">${userData?.name || ''} ${userData?.lastName || ''}</p>
                 <p style="margin-bottom:5px; color:#88ccff; font-size:0.9rem;"><span id="profile-hash-balance">${(userData?.hashBalance || 0).toLocaleString()}</span> $HASH</p>
-                <p style="margin-bottom:20px; color:#666; font-size:0.7rem;" id="profile-email">${userData?.email || ''}</p>
+                <p style="margin-bottom:5px; color:#666; font-size:0.7rem;" id="profile-email">${userData?.email || ''}</p>
+                <p style="margin-bottom:20px; color:#ffaa00; font-size:0.75rem;">Nivel: ${userData?.knowledgeLevel || '?'}</p>
                 <button class="form-submit-modal" id="logout-btn" style="background:linear-gradient(135deg,#ff4444,#cc3333);">CERRAR SESIÓN</button>
             </div>
             ` : `
@@ -85,8 +87,18 @@ document.addEventListener("DOMContentLoaded", function() {
             </form>
             <form id="register-form-modal" style="display:none;">
                 <div class="form-group-modal">
-                    <label class="form-label-modal">Nombre de Minero</label>
-                    <input type="text" class="form-input-modal" id="register-username" required placeholder="Tu alias">
+                    <label class="form-label-modal">Alias de Minero</label>
+                    <input type="text" class="form-input-modal" id="register-username" required placeholder="Tu alias en el juego">
+                </div>
+                <div style="display:flex;gap:10px;">
+                    <div class="form-group-modal" style="flex:1;">
+                        <label class="form-label-modal">Nombre</label>
+                        <input type="text" class="form-input-modal" id="register-name" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group-modal" style="flex:1;">
+                        <label class="form-label-modal">Apellido</label>
+                        <input type="text" class="form-input-modal" id="register-lastname" placeholder="Tu apellido">
+                    </div>
                 </div>
                 <div class="form-group-modal">
                     <label class="form-label-modal">Email</label>
@@ -95,6 +107,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="form-group-modal">
                     <label class="form-label-modal">Contraseña</label>
                     <input type="password" class="form-input-modal" id="register-password" required placeholder="••••••••">
+                </div>
+                <div class="form-group-modal">
+                    <label class="form-label-modal">Confirmar Contraseña</label>
+                    <input type="password" class="form-input-modal" id="register-confirm" required placeholder="••••••••">
+                </div>
+                <div class="form-group-modal">
+                    <label class="form-label-modal">Nivel de Conocimiento en Cripto</label>
+                    <select class="form-input-modal" id="register-knowledge" style="appearance:auto;">
+                        <option value="1">1 - No sé nada</option>
+                        <option value="2">2 - Principiante</option>
+                        <option value="3" selected>3 - Intermedio</option>
+                        <option value="4">4 - Avanzado</option>
+                        <option value="5">5 - Experto</option>
+                    </select>
                 </div>
                 <button type="submit" class="form-submit-modal">REGISTRARSE</button>
                 <p style="text-align:center; margin-top:20px; font-size:0.8rem; color:#88ccff;">
@@ -236,8 +262,17 @@ document.addEventListener("DOMContentLoaded", function() {
             hideError();
             const btn = registerForm.querySelector('.form-submit-modal');
             const username = document.getElementById('register-username').value;
+            const name = document.getElementById('register-name').value;
+            const lastName = document.getElementById('register-lastname').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm').value;
+            const knowledgeLevel = document.getElementById('register-knowledge').value;
+
+            if (password !== confirmPassword) {
+                showError('Las contraseñas no coinciden');
+                return;
+            }
 
             btn.textContent = 'REGISTRANDO...';
             btn.disabled = true;
@@ -247,14 +282,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     const resp = await fetch('http://localhost:3001/api/auth/register', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, email, password }),
+                        body: JSON.stringify({ username, name, lastName, email, password, confirmPassword, knowledgeLevel }),
                     });
                     const data = await resp.json();
                     if (!resp.ok) throw new Error(data.error || 'Error');
                     localStorage.setItem('hashwar_token', data.token);
                     localStorage.setItem('hashwar_user', JSON.stringify(data.user));
                 } else {
-                    await HashwarAPI.register(username, email, password);
+                    await HashwarAPI.register(username, email, password, confirmPassword, knowledgeLevel, name, lastName);
                 }
                 hideModal();
                 location.reload();

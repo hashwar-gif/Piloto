@@ -8,10 +8,19 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, name, lastName, email, password, confirmPassword, knowledgeLevel } = req.body;
 
     if (!username || !email || !password) {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: 'Las contraseñas no coinciden' });
+    }
+
+    const kl = parseInt(knowledgeLevel) || 1;
+    if (kl < 1 || kl > 5) {
+      return res.status(400).json({ error: 'El nivel de conocimiento debe ser entre 1 y 5' });
     }
 
     const existente = await prisma.user.findFirst({
@@ -23,14 +32,14 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
-      data: { username, email, password: hashedPassword },
+      data: { username, name: name || '', lastName: lastName || '', email, password: hashedPassword, knowledgeLevel: kl },
     });
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(201).json({
       token,
-      user: { id: user.id, username: user.username, email: user.email, hashBalance: user.hashBalance },
+      user: { id: user.id, username: user.username, name: user.name, lastName: user.lastName, email: user.email, hashBalance: user.hashBalance, knowledgeLevel: user.knowledgeLevel },
     });
   } catch (err) {
     console.error(err);
@@ -60,7 +69,7 @@ router.post('/login', async (req, res) => {
 
     res.json({
       token,
-      user: { id: user.id, username: user.username, email: user.email, hashBalance: user.hashBalance },
+      user: { id: user.id, username: user.username, name: user.name, lastName: user.lastName, email: user.email, hashBalance: user.hashBalance, knowledgeLevel: user.knowledgeLevel },
     });
   } catch (err) {
     console.error(err);
@@ -72,7 +81,7 @@ router.get('/me', authMiddleware, async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
-      select: { id: true, username: true, email: true, hashBalance: true, createdAt: true },
+      select: { id: true, username: true, name: true, lastName: true, email: true, hashBalance: true, knowledgeLevel: true, createdAt: true },
     });
 
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
