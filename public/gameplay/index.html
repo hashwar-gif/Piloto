@@ -185,14 +185,16 @@
     </div>
   </div>
   
-  <div class="hud-tab">
-    <button class="tab-btn active" data-tab="buildings">EDIFICIOS</button>
-    <button class="tab-btn" data-tab="units">UNIDADES</button>
-    <button class="tab-btn" data-tab="nft-store">NFT MARKET</button>
-    <button class="tab-btn" data-tab="research">INVESTIGACIÓN</button>
-    <button class="tab-btn" data-tab="contracts">CONTRATOS</button>
-    <button class="tab-btn" id="stats-btn">ESTADÍSTICAS</button>
-  </div>
+    <div class="hud-tab">
+      <button class="tab-btn active" data-tab="buildings">EDIFICIOS</button>
+      <button class="tab-btn" data-tab="units">UNIDADES</button>
+      <button class="tab-btn" data-tab="nft-store">NFT MARKET</button>
+      <button class="tab-btn" data-tab="research">INVESTIGACIÓN</button>
+      <button class="tab-btn" data-tab="contracts">CONTRATOS</button>
+      <button class="tab-btn" id="stats-btn">ESTADÍSTICAS</button>
+      <button class="tab-btn" id="cloud-save-btn" style="color:#00ff88;border-color:#00ff88;" title="Guardar en la nube">☁️</button>
+    </div>
+    <div id="cloud-indicator" style="position:fixed;bottom:10px;right:10px;color:#00ff88;font-size:0.75rem;font-family:sans-serif;opacity:0;transition:opacity 0.5s;z-index:9999;text-shadow:0 0 10px #00ff88;"></div>
   
   <div class="bottom-hud" id="buildings-tab">
     <button class="building-btn" data-building="base">BASE<div class="building-cost">0.00003650 BTC</div><div class="level-requirement">Nvl. 1</div></button>

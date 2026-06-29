@@ -45,6 +45,28 @@ function saveData() {
     localStorage.setItem('examFinished', examFinished);
 }
 
+// --- BACKEND SYNC ---
+async function syncFromBackend() {
+    if (!HashwarAPI.isLoggedIn()) return;
+    try {
+        const data = await HashwarAPI.getMe();
+        userHash = data.user.hashBalance;
+        data.progress.forEach(p => {
+            if (moduleStats[p.module.key]) {
+                moduleStats[p.module.key].correct = p.score;
+                moduleStats[p.module.key].pointsEarned = JSON.parse(p.pointsEarned || '[]');
+                if (p.status === 'COMPLETADO' && !modulesCompleted.includes(p.module.key)) {
+                    modulesCompleted.push(p.module.key);
+                }
+            }
+        });
+        updateModuleCards();
+        document.getElementById('global-hash').innerText = userHash.toLocaleString();
+    } catch (e) {
+        console.error('Error al sincronizar con backend:', e);
+    }
+}
+
 function resetPersonalProgress() {
     userHash = 0; modulesCompleted = [];
     moduleStats = {
@@ -149,7 +171,8 @@ function checkModuleAnswer(moduleId, stepIdx, selected, correct) {
     const resultDiv = stepDiv.querySelector('.step-result');
     options.forEach(opt => opt.style.pointerEvents = 'none');
 
-    if (selected === correct) {
+    const isCorrect = selected === correct;
+    if (isCorrect) {
         options[selected].style.background = 'rgba(0, 255, 136, 0.4)';
         currentSession.score++;
         if (!moduleStats[moduleId].pointsEarned[stepIdx - 1]) {
@@ -165,6 +188,9 @@ function checkModuleAnswer(moduleId, stepIdx, selected, correct) {
     stepDiv.querySelector('.btn-next-step')?.style.setProperty('display', 'inline-block');
     stepDiv.querySelector('.btn-success')?.style.setProperty('display', 'inline-block');
     saveData();
+    if (HashwarAPI.isLoggedIn()) {
+        HashwarAPI.answerQuestion(moduleId, stepIdx, isCorrect).catch(e => console.error(e));
+    }
 }
 
 function showRewardPopup(amount) {
@@ -179,6 +205,9 @@ function finishModule(moduleId) {
     if (currentSession.score > moduleStats[moduleId].correct) moduleStats[moduleId].correct = currentSession.score;
     if (!modulesCompleted.includes(moduleId)) modulesCompleted.push(moduleId);
     saveData();
+    if (HashwarAPI.isLoggedIn()) {
+        HashwarAPI.completeModule(moduleId).catch(e => console.error(e));
+    }
     
     backToAcademy();
     if (canAccessElite()) {
@@ -327,11 +356,26 @@ function printCertificate() {
     window.print();
 }
 
-function showRanking() {
+async function showRanking() {
     document.getElementById('hero').style.display = 'none';
     document.getElementById('academy').style.display = 'none';
     document.getElementById('ranking-section').style.display = 'block';
     const body = document.getElementById('ranking-body');
+    body.innerHTML = '<tr><td colspan="4" style="color: var(--primary);">CARGANDO...</td></tr>';
+
+    if (HashwarAPI.isLoggedIn()) {
+        try {
+            const ranking = await HashwarAPI.getRanking();
+            body.innerHTML = '';
+            ranking.forEach(p => {
+                body.innerHTML += `<tr><td>#${p.rank}</td><td style="color:var(--primary); font-weight:900;">${p.username}</td><td>${p.hashBalance.toLocaleString()} $HASH</td><td><span class="status-tag perfect">MINERO</span></td></tr>`;
+            });
+            return;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     body.innerHTML = '';
     globalRanking.sort((a, b) => b.score - a.score);
     globalRanking.forEach((p, i) => {
@@ -371,9 +415,12 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeImageViewer();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const startEvalBtn = document.getElementById('start-evaluation-hero');
     if(startEvalBtn) startEvalBtn.onclick = startEliteExam;
+    if (HashwarAPI.isLoggedIn()) {
+        await syncFromBackend();
+    }
     updateModuleCards();
-    setupImageZoom(); // Activar nuevo sistema de zoom
+    setupImageZoom();
 });

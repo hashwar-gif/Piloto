@@ -442,20 +442,66 @@ class HashwarGame {
     loadNextStep();
   }
 
-  finishLoading() {
+  async finishLoading() {
     try {
       // Ocultar pantalla de carga
       document.getElementById('loading-screen').style.display = 'none';
       
       // Inicializar el juego
       this.initializeGame();
+
+      // Cargar api.js y sincronizar con la nube si está logueado
+      await this.initCloudSave();
       
-      // Iniciar directamente sin registro
+      // Iniciar el juego
       this.startGame();
       
     } catch (error) {
       console.error('Error en finishLoading:', error);
       this.showErrorScreen('Error al cargar el juego: ' + error.message);
+    }
+  }
+
+  async loadApi() {
+    if (typeof HashwarAPI !== 'undefined') return true;
+    try {
+      const path = window.location.pathname;
+      const isSubdir = path.includes('/gameplay/') || path.includes('/academia/') || path.includes('/views/');
+      const base = isSubdir ? '../../' : './';
+      const script = document.createElement('script');
+      script.src = base + 'public/js/api.js';
+      document.head.appendChild(script);
+      await new Promise((resolve, reject) => {
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('No se pudo cargar api.js'));
+        setTimeout(() => resolve(), 3000);
+      });
+      return typeof HashwarAPI !== 'undefined';
+    } catch (e) {
+      console.warn('api.js no disponible:', e);
+      return false;
+    }
+  }
+
+  isLoggedIn() {
+    return typeof HashwarAPI !== 'undefined' && HashwarAPI.isLoggedIn();
+  }
+
+  async initCloudSave() {
+    const loaded = await this.loadApi();
+    if (!loaded) return;
+
+    // Si hay token pero no hay save local, intentar cargar desde la nube
+    if (!localStorage.getItem('hashwar_save') && this.isLoggedIn()) {
+      const cloudLoaded = await this.loadFromCloud();
+      if (cloudLoaded) {
+        this.loadGame();
+      }
+    }
+
+    // Iniciar auto-save si está logueado
+    if (this.isLoggedIn()) {
+      this.startAutoSave();
     }
   }
 
@@ -580,9 +626,32 @@ class HashwarGame {
         this.contractIdCounter = data.contractIdCounter || 1;
       }
       
+      // Cargar edificios enemigos
+      if (data.enemyBuildings) {
+        this.enemyBuildings = new Map(data.enemyBuildings);
+      }
+      
+      // Cargar NFTs e investigaciones
+      if (data.nftItems) this.nftItems = data.nftItems;
+      if (data.researchProjects) this.researchProjects = data.researchProjects;
+      
+      // Cargar estado del tutorial
+      if (typeof data.tutorialStep !== 'undefined') this.tutorialStep = data.tutorialStep;
+      if (typeof data.tutorialActive !== 'undefined') this.tutorialActive = data.tutorialActive;
+      
       // Reconstruir edificios
       this.gameData.buildings = new Map(data.buildings);
       this.rebuildGameState();
+      
+      // Actualizar toda la UI con los datos cargados
+      this.updateResourceDisplay();
+      this.updateUnitButtons();
+      this.calculateEnergyStats();
+      this.updateStats();
+      this.updateEnergyVisuals();
+      this.updateLevelDisplay();
+      this.updateContractsPanel();
+      this.updateBuildingAvailability();
       
       this.showNotification('Partida cargada correctamente');
       return true;
@@ -590,6 +659,100 @@ class HashwarGame {
     } catch (error) {
       console.error('Error cargando partida:', error);
       return false;
+    }
+  }
+
+  // === PERSISTENCIA EN LA NUBE (BD) ===
+
+  serializeGameState() {
+    const buildings = [];
+    this.gameData.buildings.forEach((b, i) => {
+      buildings.push([i, { type: b.type, level: b.level, lastProduction: b.lastProduction }]);
+    });
+    const enemyBuildings = [];
+    this.enemyBuildings.forEach((b, i) => {
+      enemyBuildings.push([i, { type: b.type, level: b.level }]);
+    });
+    return {
+      version: "1.0.0",
+      resources: { ...this.resources },
+      playerLevel: this.playerLevel,
+      playerXP: this.playerXP,
+      xpToNextLevel: this.xpToNextLevel,
+      units: { ...this.playerUnits },
+      enemyAI: {
+        difficulty: this.enemyAI.difficulty,
+        evolution: this.enemyAI.evolution
+      },
+      gameState: {
+        btcInvested: this.btcInvested,
+        totalHashProduced: this.totalHashProduced
+      },
+      contracts: this.contracts,
+      contractIdCounter: this.contractIdCounter,
+      buildings,
+      enemyBuildings,
+      nftItems: { ...this.nftItems },
+      researchProjects: { ...this.researchProjects },
+      tutorialStep: this.tutorialStep,
+      tutorialActive: this.tutorialActive,
+      timestamp: Date.now()
+    };
+  }
+
+  async saveGame() {
+    const data = this.serializeGameState();
+    localStorage.setItem('hashwar_save', JSON.stringify(data));
+    if (this.isLoggedIn()) {
+      try {
+        await HashwarAPI.saveGameState(data);
+        this.showCloudIndicator('NUBE: Guardado');
+      } catch (e) {
+        console.warn('Error al guardar en la nube:', e);
+      }
+    }
+  }
+
+  async loadFromCloud() {
+    if (!this.isLoggedIn()) return false;
+    try {
+      const resp = await HashwarAPI.getGameState();
+      if (!resp.state) return false;
+      localStorage.setItem('hashwar_save', JSON.stringify(resp.state));
+      return true;
+    } catch (e) {
+      console.warn('Error al cargar desde la nube:', e);
+      return false;
+    }
+  }
+
+  async syncHashToBackend() {
+    if (!this.isLoggedIn()) return;
+    try {
+      await HashwarAPI.syncHash(Math.floor(this.resources.hash));
+      const me = await HashwarAPI.getMe();
+      localStorage.setItem('hashwar_user', JSON.stringify(me.user));
+    } catch (e) {
+      console.warn('Error al sincronizar HASH:', e);
+    }
+  }
+
+  startAutoSave() {
+    this.autoSaveInterval = setInterval(() => {
+      if (this.resources) this.saveGame();
+    }, 30000);
+    // Sincronizar hash cada 10 segundos
+    this.hashSyncInterval = setInterval(() => {
+      if (this.resources) this.syncHashToBackend();
+    }, 10000);
+  }
+
+  showCloudIndicator(text) {
+    const el = document.getElementById('cloud-indicator');
+    if (el) {
+      el.textContent = text;
+      el.style.opacity = '1';
+      setTimeout(() => { if (el) el.style.opacity = '0'; }, 2000);
     }
   }
 
@@ -1060,6 +1223,10 @@ class HashwarGame {
     document.getElementById('stats-btn').addEventListener('click', () => {
       const statsPanel = document.getElementById('stats-panel');
       statsPanel.style.display = statsPanel.style.display === 'block' ? 'none' : 'block';
+    });
+    document.getElementById('cloud-save-btn').addEventListener('click', () => {
+      this.saveGame();
+      this.syncHashToBackend();
     });
     document.addEventListener('click', e => {
       const statsPanel = document.getElementById('stats-panel');
@@ -1551,6 +1718,7 @@ class HashwarGame {
 
   saveGlobalHash() {
     localStorage.setItem('userHash', Math.floor(this.resources.hash));
+    this.syncHashToBackend();
   }
 
   updateResourceDisplay() {
@@ -1755,7 +1923,16 @@ class HashwarGame {
   }
 }
 
+// Guardado local síncrono antes de salir (la API async se dispara sin espera)
+window.addEventListener('beforeunload', () => {
+  const game = window.__hashwarGame;
+  if (game && game.resources) {
+    const data = game.serializeGameState();
+    localStorage.setItem('hashwar_save', JSON.stringify(data));
+  }
+});
+
 // Iniciar el juego
 window.onload = () => {
-  new HashwarGame();
+  window.__hashwarGame = new HashwarGame();
 };

@@ -537,56 +537,6 @@ document.addEventListener('DOMContentLoaded', function() {
     createParticles();
     createCoins();
 
-    // --- Lógica del Modal de Login ---
-    const modal = document.getElementById('login-modal');
-    const openBtn = document.getElementById('open-login-modal');
-    const closeBtn = document.getElementById('close-login');
-    const loginForm = document.getElementById('login-form-modal');
-
-    if (openBtn && modal) {
-        openBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.style.display = 'flex';
-            setTimeout(() => modal.style.opacity = '1', 10);
-        });
-    }
-
-    if (closeBtn && modal) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.opacity = '0';
-            setTimeout(() => modal.style.display = 'none', 300);
-        });
-    }
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.opacity = '0';
-            setTimeout(() => modal.style.display = 'none', 300);
-        }
-    });
-
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = loginForm.querySelector('.form-submit-modal');
-            btn.textContent = 'AUTENTICANDO...';
-            btn.style.background = '#ff0066';
-            
-            setTimeout(() => {
-                // Aquí iría la redirección post-login
-                modal.style.opacity = '0';
-                setTimeout(() => modal.style.display = 'none', 300);
-                alert('¡Bienvenido minero! Operaciones iniciadas.');
-            }, 1200);
-        });
-    }
-
-    // Abrir modal automáticamente si se solicita vía URL (para compatibilidad)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('showLogin') === 'true' && openBtn) {
-        openBtn.click();
-    }
-
     // --- Efecto de Escritura (Typing) ---
     const typingText = document.querySelector('.typing-text');
     if (typingText) {

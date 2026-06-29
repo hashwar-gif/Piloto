@@ -1,0 +1,205 @@
+=========================================================
+  HASHWAR: RISE OF THE MINERS - CONFIGURACIÓN DEL BACKEND
+=========================================================
+
+Este archivo explica cómo conectar la base de datos y
+ejecutar el servidor local después de clonar el repositorio.
+
+
+══════════════════════════════════════════════════════════
+  1. INSTALAR PostgreSQL
+══════════════════════════════════════════════════════════
+
+  • Descargar desde: https://www.postgresql.org/download/
+  • Durante la instalación, establece una contraseña para
+    el usuario "postgres" (ej: "mi_contraseña").
+  • Anota esa contraseña, la necesitarás más adelante.
+
+
+══════════════════════════════════════════════════════════
+  2. CREAR LA BASE DE DATOS
+══════════════════════════════════════════════════════════
+
+  Abre una terminal (PowerShell / CMD) y ejecuta:
+
+    cd backend
+    "$env:PGPASSWORD='mi_contraseña'; psql -U postgres -c 'CREATE DATABASE hashwar_db'"
+
+  (En CMD reemplazar por: set PGPASSWORD=mi_contraseña
+                            psql -U postgres -c "CREATE DATABASE hashwar_db")
+
+
+══════════════════════════════════════════════════════════
+  3. CONFIGURAR LA CONEXIÓN
+══════════════════════════════════════════════════════════
+
+  Abre el archivo "backend/.env" y edítalo con tus datos:
+
+    DATABASE_URL="postgresql://postgres:mi_contraseña@localhost:5432/hashwar_db"
+    JWT_SECRET="hashwar_secret_2026"
+    PORT=3001
+
+  Reemplaza "mi_contraseña" por la contraseña que pusiste
+  al instalar PostgreSQL.
+  (NOTA: .env NO se sube a GitHub, es local de cada quien)
+
+
+══════════════════════════════════════════════════════════
+  4. INSTALAR DEPENDENCIAS
+══════════════════════════════════════════════════════════
+
+  En la terminal, dentro de la carpeta "backend":
+
+    npm install
+
+
+══════════════════════════════════════════════════════════
+  5. EJECUTAR LAS MIGRACIONES (crear tablas)
+══════════════════════════════════════════════════════════
+
+    npx prisma migrate dev
+
+  Esto crea las 13 tablas en la base de datos:
+  User, Module, UserProgress, Transaction, GameState,
+  Post, Category, Package, UserSubscription, Product,
+  UserInventory, ContactMessage, RoadmapMilestone.
+
+
+══════════════════════════════════════════════════════════
+  6. INSERTAR DATOS INICIALES (seed)
+══════════════════════════════════════════════════════════
+
+    node prisma/seed.js
+
+  Esto inserta:
+  • 6 módulos de academia (blockchain, mining, etc.)
+  • 3 categorías de blog + 2 posts de ejemplo
+  • 3 paquetes de suscripción (Novato, Avanzado, Experto)
+  • 12 productos del marketplace (merch, NFTs, equipos)
+  • 3 hitos del roadmap
+
+
+══════════════════════════════════════════════════════════
+  7. INICIAR EL SERVIDOR
+══════════════════════════════════════════════════════════
+
+    npm start
+
+  Deberías ver: "HASHWAR API corriendo en http://localhost:3001"
+
+
+══════════════════════════════════════════════════════════
+  8. VERIFICAR QUE FUNCIONA
+══════════════════════════════════════════════════════════
+
+  Abre otra terminal y ejecuta:
+
+    curl http://localhost:3001/api/health
+
+  Respuesta esperada: {"status":"ok","timestamp":"..."}
+
+  O simplemente abre en el navegador:
+  → http://localhost:3001/api/health
+
+
+══════════════════════════════════════════════════════════
+  9. ABRIR EL JUEGO
+══════════════════════════════════════════════════════════
+
+  • Abre "index.html" en tu navegador (doble clic).
+  • Haz clic en "INICIAR SESIÓN" → "CREAR CUENTA".
+  • Regístrate y empieza a jugar.
+  • Visita la Academia y responde preguntas — tu progreso
+    ahora se guarda en la base de datos.
+
+
+══════════════════════════════════════════════════════════
+  10. ENDPOINTS DE LA API
+══════════════════════════════════════════════════════════
+
+  Autenticación:
+    POST   /api/auth/register     → Crear cuenta
+    POST   /api/auth/login        → Iniciar sesión
+    GET    /api/auth/me           → Perfil + progreso
+    PATCH  /api/auth/hash         → Sincronizar $HASH
+
+  Academia:
+    GET    /api/modules           → Listar módulos
+    POST   /api/modules/:key/answer    → Responder pregunta
+    POST   /api/modules/:key/complete  → Completar módulo
+
+  Ranking:
+    GET    /api/ranking           → Top 100 jugadores
+
+  Gameplay:
+    GET    /api/game/state        → Cargar partida
+    POST   /api/game/state        → Guardar partida
+    DELETE /api/game/state        → Eliminar partida
+
+  Blog:
+    GET    /api/blog/posts        → Listar posts
+    GET    /api/blog/posts/:slug  → Ver post
+    GET    /api/blog/categories   → Listar categorías
+
+  Paquetes:
+    GET    /api/packages          → Listar paquetes
+    GET    /api/packages/my-subscription → Mi suscripción
+    POST   /api/packages/subscribe/:id   → Suscribirse
+
+  Marketplace:
+    GET    /api/marketplace/products     → Productos
+    POST   /api/marketplace/buy/:id      → Comprar
+    GET    /api/marketplace/inventory    → Mi inventario
+
+  Contacto:
+    POST   /api/contact           → Enviar mensaje
+
+  Roadmap:
+    GET    /api/roadmap           → Hitos del roadmap
+
+
+══════════════════════════════════════════════════════════
+  NOTAS IMPORTANTES
+══════════════════════════════════════════════════════════
+
+  • El servidor debe estar CORRIENDO (paso 7) cada vez que
+    juegues, si quieres que los datos se guarden en la BD.
+
+  • Si cierras la terminal, el servidor se detiene.
+    Vuelve al paso 7 para reiniciarlo.
+
+  • La carpeta "backend/" incluye un .gitignore que ya
+    excluye node_modules/, .env, y prisma/migrations/.
+    Tus datos locales nunca se subirán a GitHub.
+
+  • Cualquier persona que clone el repositorio debe seguir
+    estos pasos para tener su propia base de datos local.
+
+  • Para ver la BD desde pgAdmin4:
+    Servidor: localhost, Puerto: 5432, Usuario: postgres
+    Base de datos: hashwar_db
+
+
+══════════════════════════════════════════════════════════
+  SOLUCIÓN DE PROBLEMAS
+══════════════════════════════════════════════════════════
+
+  "Puerto 3001 ya está en uso":
+    taskkill /F /IM node.exe
+    npm start
+
+  "Error de autenticación en BD":
+    Revisar la contraseña en backend/.env
+
+  "Prisma migration falla":
+    Asegúrate de que PostgreSQL esté corriendo
+    y que la base de datos "hashwar_db" exista
+
+  "Login no funciona":
+    Abrir la página desde index.html (no desde public/gameplay/)
+    o asegurarse de haber iniciado sesión antes
+
+
+=========================================================
+  © 2024-2026 HASHWAR: Rise of the Miners
+=========================================================
