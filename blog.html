@@ -74,30 +74,10 @@
             <div class="blog-header text-center mb-5">
                 <h2 class="section-title" style="color: #00d4ff; font-family: 'Orbitron', sans-serif;">BLOG HASHWAR</h2>
                 <p class="text-light opacity-75">Mantente actualizado con las últimas noticias del universo HASHWAR</p>
+                <div id="category-filters" class="mt-3 d-flex gap-2 justify-content-center flex-wrap"></div>
             </div>
-            
-            <div class="row g-4">
-                <!-- Tarjeta de Blog 1 -->
-                <div class="col-md-6">
-                    <div class="blog-card-enhanced p-4" style="background: rgba(0, 31, 58, 0.4); border-radius: 15px; border: 1px solid #00d4ff;">
-                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded mb-3" alt="Noticias">
-                        <span class="badge bg-info text-dark mb-2">NOTICIAS</span>
-                        <h3 class="text-white">Gran Final del Torneo HASHWAR</h3>
-                        <p style="color: #b0d4ff;">Sigue en vivo la batalla final por el pool de $100,000 USDT. Los mejores clanes se enfrentan hoy.</p>
-                        <a href="#" class="btn btn-sm btn-outline-info">Leer más</a>
-                    </div>
-                </div>
-                <!-- Tarjeta de Blog 2 -->
-                <div class="col-md-6">
-                    <div class="blog-card-enhanced p-4" style="background: rgba(0, 31, 58, 0.4); border-radius: 15px; border: 1px solid #ff0055;">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded mb-3" alt="Estrategias">
-                        <span class="badge bg-danger mb-2">ESTRATEGIAS</span>
-                        <h3 class="text-white">Dominando el Terreno 3D</h3>
-                        <p style="color: #b0d4ff;">Aprende a posicionar tus defensas según la elevación del terreno en la nueva versión 5.0.</p>
-                        <a href="#" class="btn btn-sm btn-outline-danger">Leer más</a>
-                    </div>
-                </div>
-            </div>
+            <div id="blog-posts" class="row g-4"></div>
+            <div id="blog-loading" class="text-center py-5"><i class="fas fa-spinner fa-spin fa-3x text-info"></i><p class="mt-2 text-info">Cargando posts...</p></div>
         </div>
     </section>
 
@@ -106,6 +86,60 @@
     <script src="./public/js/footer.js"></script>
     <link rel="stylesheet" href="./public/css/styles_footer.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    async function waitForAPI() {
+        while (typeof HashwarAPI === 'undefined') await new Promise(r => setTimeout(r, 100));
+    }
+    async function loadBlog() {
+        await waitForAPI();
+        const container = document.getElementById('blog-posts');
+        const loading = document.getElementById('blog-loading');
+        const filters = document.getElementById('category-filters');
+        try {
+            const [cats, posts] = await Promise.all([
+                HashwarAPI.getCategories(),
+                HashwarAPI.getPosts()
+            ]);
+            loading.style.display = 'none';
+            const allBtn = document.createElement('button');
+            allBtn.className = 'btn btn-sm btn-info active';
+            allBtn.textContent = 'TODOS';
+            allBtn.onclick = () => renderPosts(posts.posts, '');
+            filters.appendChild(allBtn);
+            cats.categories.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm btn-outline-info';
+                btn.textContent = c.name.toUpperCase();
+                btn.onclick = () => {
+                    filters.querySelectorAll('.btn').forEach(b => b.className = 'btn btn-sm btn-outline-info');
+                    btn.className = 'btn btn-sm btn-info';
+                    renderPosts(posts.posts, c.slug);
+                };
+                filters.appendChild(btn);
+            });
+            renderPosts(posts.posts, '');
+        } catch(e) {
+            loading.innerHTML = `<p class="text-danger">Error al cargar: ${e.message}</p>`;
+        }
+    }
+    function renderPosts(posts, category) {
+        const container = document.getElementById('blog-posts');
+        const filtered = category ? posts.filter(p => p.categorySlug === category) : posts;
+        if (!filtered.length) { container.innerHTML = '<div class="col-12 text-center text-info py-5"><p>No hay posts en esta categoría</p></div>'; return; }
+        container.innerHTML = filtered.map(p => `
+            <div class="col-md-6">
+                <div class="blog-card-enhanced p-4" style="background: rgba(0, 31, 58, 0.4); border-radius: 15px; border: 1px solid #00d4ff;">
+                    ${p.imageUrl ? `<img src="${p.imageUrl}" class="img-fluid rounded mb-3" alt="${p.title}">` : ''}
+                    <span class="badge bg-info text-dark mb-2">${p.categoryName.toUpperCase()}</span>
+                    <h3 class="text-white">${p.title}</h3>
+                    <p style="color: #b0d4ff;">${p.summary}</p>
+                    <a href="#" class="btn btn-sm btn-outline-info">Leer más</a>
+                </div>
+            </div>
+        `).join('');
+    }
+    document.addEventListener('DOMContentLoaded', loadBlog);
+    </script>
     </body>
     </html>

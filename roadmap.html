@@ -71,46 +71,8 @@
     <section class="roadmap-section py-5" id="roadmap" style="padding-top: 90px !important;">
         <div class="container">
             <h2 class="section-title text-center mb-5" style="color: #00d4ff; font-family: 'Orbitron', sans-serif;">ROADMAP ESTRATÉGICO</h2>
-            <div class="timeline">
-                <!-- Hito Actualizado: Abril 2026 -->
-                <div class="timeline-item current mb-5 p-4" style="background: rgba(0, 31, 58, 0.4); border-left: 4px solid #00d4ff; border-radius: 0 15px 15px 0;">
-                    <div class="timeline-date fw-bold text-info">ABRIL 2026</div>
-                    <div class="timeline-content">
-                        <h4 class="text-white">LANZAMIENTO OFICIAL</h4>
-                        <ul class="list-unstyled mt-3" style="color: #b0d4ff;">
-                           <li>✅ PLATAFORMA</li>
-                           <li>✅ ADADEMIAHASHWAR</li>
-                           <li>✅ GAMEPLAY</li>
-                           <li>✅ HASHWAR</li>
-                           <li>✅ PAQUETES GRATUITOS</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item future mb-5 p-4" style="background: rgba(0, 31, 58, 0.4); border-left: 4px solid #ff0055; border-radius: 0 15px 15px 0; opacity: 0.8;">
-                    <div class="timeline-date fw-bold text-danger">JULIO 2026</div>
-                    <div class="timeline-content">
-                        <h4 class="text-white">LANZAMIENTO BETA</h4>
-                        <ul class="list-unstyled mt-3" style="color: #b0d4ff;">
-                            <li>🔄 Core gameplay 3D RTS</li>
-                            <li>🔄 Sistema de torneos</li>
-                            <li>🔄 App móvil</li>
-                            <li>🔄 Multi-chain</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item future p-4" style="background: rgba(0, 31, 58, 0.4); border-left: 4px solid #00d4ff; border-radius: 0 15px 15px 0; opacity: 0.8;">
-                    <div class="timeline-date fw-bold text-info">ENERO 2027</div>
-                    <div class="timeline-content">
-                        <h4 class="text-white">LANZAMIENTO OFICIAL FINAL</h4>
-                        <ul class="list-unstyled mt-3" style="color: #b0d4ff;">
-                            <li>⚡ Cross-platform play</li>
-                            <li>⚡ DAO de gobierno</li>
-                            <li>⚡ Hardware de minería oficial</li>
-                            <li>⚡ Esports profesional</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <div id="roadmap-loading" class="text-center py-5"><i class="fas fa-spinner fa-spin fa-3x text-info"></i><p class="mt-2 text-info">Cargando roadmap...</p></div>
+            <div id="roadmap-timeline" class="timeline"></div>
         </div>
     </section>
 
@@ -120,5 +82,35 @@
     <link rel="stylesheet" href="./public/css/styles_footer.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    async function waitForAPI() {
+        while (typeof HashwarAPI === 'undefined') await new Promise(r => setTimeout(r, 100));
+    }
+    async function loadRoadmap() {
+        await waitForAPI();
+        const loading = document.getElementById('roadmap-loading');
+        const timeline = document.getElementById('roadmap-timeline');
+        try {
+            const data = await HashwarAPI.getRoadmap();
+            loading.style.display = 'none';
+            const statusStyles = { completed: 'border-left: 4px solid #00d4ff', in_progress: 'border-left: 4px solid #ff0055', future: 'border-left: 4px solid #00d4ff; opacity: 0.8' };
+            const statusIcons = { completed: '✅', in_progress: '🔄', future: '⚡' };
+            const statusColors = { completed: 'text-info', in_progress: 'text-danger', future: 'text-info' };
+            timeline.innerHTML = data.milestones.map((m, i) => `
+                <div class="timeline-item ${i < data.milestones.length - 1 ? 'mb-5' : ''} p-4" style="background: rgba(0, 31, 58, 0.4); ${statusStyles[m.status]}; border-radius: 0 15px 15px 0;">
+                    <div class="timeline-date fw-bold ${statusColors[m.status]}">${m.date}</div>
+                    <div class="timeline-content">
+                        <h4 class="text-white">${m.title.toUpperCase()}</h4>
+                        <p style="color: #b0d4ff;">${m.description || ''}</p>
+                        <span class="badge bg-${m.status === 'completed' ? 'success' : m.status === 'in_progress' ? 'warning text-dark' : 'secondary'}">${statusIcons[m.status]} ${m.status.toUpperCase().replace('_', ' ')}</span>
+                    </div>
+                </div>
+            `).join('');
+        } catch(e) {
+            loading.innerHTML = `<p class="text-danger">Error al cargar: ${e.message}</p>`;
+        }
+    }
+    document.addEventListener('DOMContentLoaded', loadRoadmap);
+    </script>
 </body>
 </html>

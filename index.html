@@ -168,295 +168,39 @@
     </div>
 </section>
 
+<link rel="stylesheet" href="./public/css/marketplace_v32.css">
+
 <!-- Roadmap Section -->
-<section class="roadmap-section py-5" id="roadmap">
+<section class="roadmap-section py-5" id="roadmap-section">
     <div class="container">
         <h2 class="section-title text-center mb-5" style="font-family: 'Orbitron', sans-serif; color: var(--primary-glow);">ROADMAP ESTRATÉGICO</h2>
-        
-        <div class="timeline">
-            <div class="timeline-item current">
-                <div class="timeline-date">ABR 2026</div>
-                <div class="timeline-content">
-                    <h4>LANZAMIENTO OFICIAL</h4>
-                    <ul>
-                       <li>✅ PLATAFORMA</li>
-                       <li>✅ ADADEMIAHASHWAR</li>
-                       <li>✅ GAMEPLAY</li>
-                       <li>✅ HASHWAR</li>
-                       <li>✅ PAQUETES GRATUITOS</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="timeline-item current">
-                <div class="timeline-date">JUL 2026</div>
-                <div class="timeline-content">
-                    <h4>LANZAMIENTO BETA</h4>
-                    <ul>
-                        <li>🔄 Core gameplay 3D RTS</li>
-                        <li>🔄 Sistema de torneos</li>
-                        <li>🔄 App móvil</li>
-                        <li>🔄 Multi-chain</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="timeline-item future">
-                <div class="timeline-date">ENE 2027</div>
-                <div class="timeline-content">
-                    <h4>LANZAMIENTO OFICIAL</h4>
-                    <ul>
-                        <li>⚡ Cross-platform play</li>
-                        <li>⚡ Reality Show competitivo</li>
-                        <li>⚡ DAO de gobierno</li>
-                        <li>⚡ Esports profesional</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div id="roadmap-loading" class="text-center py-5"><i class="fas fa-spinner fa-spin fa-3x text-info"></i><p class="mt-2 text-info">Cargando roadmap...</p></div>
+        <div id="roadmap-timeline" class="timeline"></div>
     </div>
 </section>
 
 <!-- Paquetes -->
-<section class="packages py-5" id="packages">
+<section class="packages py-5" id="packages-section">
     <div class="container">
         <h2 class="section-title text-center mb-5" style="font-family: 'Orbitron', sans-serif; color: var(--primary-glow);">NUESTROS PAQUETES</h2>
-        <div class="row g-4">
-            <!-- Nivel 1 - Gratis -->
-            <div class="col-md-4">
-                <div class="package-card p-4 h-100 text-center" style="background: rgba(0, 31, 58, 0.5); border: 1px solid var(--primary-glow); border-radius: 15px;">
-                    <h3 class="package-name">Academia</h3>
-                    <div class="package-price my-3 fs-2 fw-bold" style="color: var(--primary-glow);">GRATIS</div>
-                    <ul class="list-unstyled mb-4 text-start">
-                        <li><i class="fas fa-check text-success me-2"></i> Acceso al juego base</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Tutoriales de minería</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Soporte básico</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Contenido educativo</li>
-                    </ul>
-                    <a href="./public/academia/index.html" class="btn btn-outline-info w-100">COMENZAR GRATIS</a>
-                </div>
-            </div>
-            
-            <!-- Nivel 2 - Pro -->
-            <div class="col-md-4">
-                <div class="package-card p-4 h-100 text-center featured coming-soon" style="background: rgba(0, 50, 100, 0.6); border: 2px solid #ff0055; border-radius: 15px;">
-                    <div class="package-coming-soon-overlay">Próximamente</div>
-                    <h3 class="package-name">Pro (Nivel 3-4)</h3>
-                    <div class="package-price my-3 fs-2 fw-bold" style="color: #ff0055;">$7.99</div>
-                    <ul class="list-unstyled mb-4 text-start">
-                        <li><i class="fas fa-check text-success me-2"></i> Acceso a Pool de Minería</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Hasta 2 GPUs conectadas</li>
-                        <li><i class="fas fa-check text-success me-2"></i> NFTs exclusivos</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Torneos con premios</li>
-                    </ul>
-                    <button class="btn btn-secondary w-100" disabled>BLOQUEADO</button>
-                </div>
-            </div>
-
-            <!-- Nivel 3 - Elite -->
-            <div class="col-md-4">
-                <div class="package-card p-4 h-100 text-center coming-soon" style="background: rgba(0, 31, 58, 0.5); border: 1px solid var(--primary-glow); border-radius: 15px;">
-                    <div class="package-coming-soon-overlay">Próximamente</div>
-                    <h3 class="package-name">Elite (Nivel 5)</h3>
-                    <div class="package-price my-3 fs-2 fw-bold" style="color: var(--primary-glow);">$17.99</div>
-                    <ul class="list-unstyled mb-4 text-start">
-                        <li><i class="fas fa-check text-success me-2"></i> Todo lo del nivel Pro</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Hasta 8 GPUs conectadas</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Asesor de minería personal</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Acceso VIP a eventos</li>
-                    </ul>
-                    <button class="btn btn-secondary w-100" disabled>BLOQUEADO</button>
-                </div>
-            </div>
-        </div>
+        <div id="packages-loading" class="text-center py-5"><i class="fas fa-spinner fa-spin fa-3x text-info"></i><p class="mt-2 text-info">Cargando paquetes...</p></div>
+        <div id="packages-list" class="row g-4"></div>
     </div>
 </section>
 
 <!-- Marketplace Section -->
-<link rel="stylesheet" href="./public/css/marketplace_v32.css">
-<section class="marketplace py-5" id="marketplace">
+<section class="marketplace py-5" id="marketplace-section">
     <div class="container">
         <h2 class="section-title text-center mb-2" style="font-family: 'Orbitron', sans-serif;">MARKETPLACE EXCLUSIVO</h2>
-        <p class="text-center text-info mb-5" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">ESTRENO PRÓXIMAMENTE</p>
-
-        <div class="marketplace-tabs mb-5">
-            <button class="tab-btn active" data-tab="merchandise">Merchandise</button>
-            <button class="tab-btn" data-tab="nfts">NFTs</button>
-            <button class="tab-btn" data-tab="mining-equipment">Equipo de Minería</button>
-        </div>
-
-        <!-- Merchandise Tab -->
-        <div class="tab-content active" id="merchandise-tab">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/poster.jpeg" alt="Poster HASHWAR">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Poster HASHWAR</h3>
-                            <div class="product-price">$14.99</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/polera.jpeg" alt="Polera HASHWAR">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Polera HASHWAR</h3>
-                            <div class="product-price">$29.99</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/caguro.jpeg" alt="Canguro HASHWAR">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Canguro HASHWAR</h3>
-                            <div class="product-price">$39.99</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/combo1.jpeg" alt="Combo HASHWAR">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Combo HASHWAR</h3>
-                            <div class="product-price">$79.99</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
+        <p class="text-center text-info mb-5" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">COMPRA CON USD O ETH</p>
+        <div id="marketplace-loading" class="text-center py-5"><i class="fas fa-spinner fa-spin fa-3x text-info"></i><p class="mt-2 text-info">Cargando productos...</p></div>
+        <div id="marketplace-content" style="display:none;">
+            <div class="marketplace-tabs mb-5">
+                <button class="tab-btn active" data-tab2="merch">Merchandise</button>
+                <button class="tab-btn" data-tab2="nft">NFTs</button>
+                <button class="tab-btn" data-tab2="equipment">Equipo de Minería</button>
             </div>
-        </div>
-
-        <!-- NFTs Tab -->
-        <div class="tab-content" id="nfts-tab">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/minero lej.jpeg" alt="NFT Legendario">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Minero Legendario</h3>
-                            <div class="product-price">0.05 ETH</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/3.jpeg" alt="NFT Épico">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">GPU Épica</h3>
-                            <div class="product-price">0.03 ETH</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/6.jpeg" alt="NFT Raro">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Hash Boost Raro</h3>
-                            <div class="product-price">0.01 ETH</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/2.jpeg" alt="NFT Pro">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Hash Boost Pro</h3>
-                            <div class="product-price">0.02 ETH</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mining Equipment Tab -->
-        <div class="tab-content" id="mining-equipment-tab">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/rog.jpg" alt="GPU RTX 3060">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">GPU RTX 3060 Ti</h3>
-                            <div class="product-price">$549.99</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/rig.jpg" alt="Mining Rig">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Rig Profesional 6x</h3>
-                            <div class="product-price">$3,200.00</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/asic.jpg" alt="ASIC S19">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Antminer S19 Pro</h3>
-                            <div class="product-price">$2,450.00</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card coming-soon">
-                        <div class="coming-soon-overlay">Próximamente</div>
-                        <div class="product-img">
-                            <img src="./public/img/hydro.jpg" alt="Hydro Cooling">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Sistema Hydro Cooling</h3>
-                            <div class="product-price">$899.99</div>
-                            <button class="btn btn-secondary" disabled>Bloqueado</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="marketplace-products" class="row g-4"></div>
         </div>
     </div>
 </section>
@@ -557,6 +301,100 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="./public/js/home.js"></script>
 <script src="./public/js/marketplace.js"></script>
+<script>
+async function loadIndexSections() {
+    if (typeof HashwarAPI === 'undefined') {
+        const s = document.createElement('script');
+        s.src = './public/js/api.js';
+        document.head.appendChild(s);
+        await new Promise(r => s.onload = r);
+    }
+
+    // Roadmap
+    try {
+        const r = await HashwarAPI.getRoadmap();
+        const loading = document.getElementById('roadmap-loading');
+        const timeline = document.getElementById('roadmap-timeline');
+        loading.style.display = 'none';
+        const statusStyles = { completed: 'border-left: 4px solid #00d4ff', in_progress: 'border-left: 4px solid #ff0055', future: 'border-left: 4px solid #00d4ff; opacity: 0.8' };
+        timeline.innerHTML = r.milestones.map((m, i) => `
+            <div class="timeline-item ${i < r.milestones.length - 1 ? 'mb-4' : ''} p-3" style="background: rgba(0, 31, 58, 0.4); ${statusStyles[m.status]}; border-radius: 0 15px 15px 0;">
+                <div class="timeline-date fw-bold ${m.status === 'completed' ? 'text-info' : m.status === 'in_progress' ? 'text-danger' : 'text-info'}">${m.date}</div>
+                <div class="timeline-content">
+                    <h4 style="color: #fff; font-size: 1.1rem;">${m.title.toUpperCase()}</h4>
+                    <ul class="list-unstyled" style="color: #b0d4ff; font-size: 0.9rem;">
+                        ${(m.description || '').split(',').map(s => `<li>${m.status === 'completed' ? '✅' : m.status === 'in_progress' ? '🔄' : '⚡'} ${s.trim()}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) { document.getElementById('roadmap-loading').innerHTML = `<p class="text-danger">${e.message}</p>`; }
+
+    // Paquetes
+    try {
+        const p = await HashwarAPI.getPackages();
+        document.getElementById('packages-loading').style.display = 'none';
+        const pColors = ['#00d4ff', '#ff0055', '#00d4ff'];
+        document.getElementById('packages-list').innerHTML = p.packages.map((pkg, i) => `
+            <div class="col-md-4">
+                <div class="package-card p-4 h-100 text-center" style="background: rgba(0, 31, 58, 0.5); border: 1px solid ${pColors[i]}; border-radius: 15px;">
+                    <h3 class="package-name" style="color: #fff; text-transform: uppercase;">${pkg.name}</h3>
+                    <div class="package-price my-3 fs-2 fw-bold" style="color: ${pColors[i]};">$${parseFloat(pkg.price).toFixed(2)}</div>
+                    <ul class="list-unstyled mb-4 text-start" style="color: #fff;">
+                        ${pkg.features.map(f => `<li><i class="fas fa-check text-success me-2"></i> ${f}</li>`).join('')}
+                    </ul>
+                    <button class="btn btn-outline-info w-100 btn-sm" onclick="if(HashwarAPI.isLoggedIn())HashwarAPI.subscribe('${pkg.id}').then(()=>alert('¡Suscrito!')).catch(e=>alert(e.message));else alert('Inicia sesión')">SUSCRIBIRSE</button>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) { document.getElementById('packages-loading').innerHTML = `<p class="text-danger">${e.message}</p>`; }
+
+    // Marketplace
+    try {
+        const m = await HashwarAPI.getProducts();
+        document.getElementById('marketplace-loading').style.display = 'none';
+        document.getElementById('marketplace-content').style.display = 'block';
+        const tabMap = { merch: 'merch', nft: 'nft', equipment: 'equipment' };
+        let currentTab = 'merch';
+        function renderMarketplace(cat) {
+            const container = document.getElementById('marketplace-products');
+            const filtered = cat === 'merch' ? m.products.filter(x => x.category === 'merch') :
+                             cat === 'nft' ? m.products.filter(x => x.category === 'nft') :
+                             m.products.filter(x => x.category === 'equipment');
+            container.innerHTML = filtered.map(prod => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card" style="background: rgba(0, 31, 58, 0.4); border: 1px solid #00d4ff; border-radius: 15px; padding: 15px; text-align: center;">
+                        <div class="product-img mb-3">
+                            ${prod.imageUrl ? `<img src="${prod.imageUrl}" class="img-fluid rounded" alt="${prod.name}" style="height:150px;object-fit:cover;">` : '<div style="height:150px;background:rgba(0,212,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-box fa-3x text-info"></i></div>'}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title" style="color:#fff;font-size:1rem;">${prod.name}</h3>
+                            <div class="product-price" style="color:var(--primary-glow);font-weight:bold;">${prod.priceType === 'ETH' ? prod.price + ' ETH' : '$' + parseFloat(prod.price).toFixed(2)}</div>
+                            <small class="text-muted d-block mb-2">Stock: ${prod.stock}</small>
+                            <button class="btn btn-sm btn-outline-info w-100" ${prod.stock < 1 ? 'disabled' : ''} onclick="buyMarketplace('${prod.id}')">${prod.stock < 1 ? 'AGOTADO' : 'COMPRAR'}</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        document.querySelectorAll('[data-tab2]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-tab2]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentTab = this.dataset.tab2;
+                renderMarketplace(currentTab);
+            });
+        });
+        renderMarketplace('merch');
+    } catch(e) { document.getElementById('marketplace-loading').innerHTML = `<p class="text-danger">${e.message}</p>`; }
+}
+async function buyMarketplace(id) {
+    if (!HashwarAPI.isLoggedIn()) { alert('Inicia sesión para comprar'); return; }
+    if (!confirm('¿Confirmar compra?')) return;
+    try { const r = await HashwarAPI.buyProduct(id); if (r.success) alert('¡Compra realizada!'); } catch(e) { alert(e.message); }
+}
+document.addEventListener('DOMContentLoaded', loadIndexSections);
+</script>
 </body>
 </html>
 
